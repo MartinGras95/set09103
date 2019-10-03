@@ -36,29 +36,12 @@ def static_example_img():
     end = '">'
     return start+url+end, 200
 
-@app.route('/account',methods=['GET','POST'])
-def account():
-    if request.method =='POST':
-        f = request.files['datafile']
-        f.save('static/uploads/vmask.jpg')
-        return "File Uploaded"
-    else:
-        page = '''
-        <html>
-        <body>
-        <form action="" method="post" name="form" enctype="multipart/form-data">
-            <input type="file" name="datafile" />
-            <input type="submit" name="submit" id="submit"/>
-        </form>
-        </body>
-        </html>
-        '''
-        return page, 200
-
+#Displaying file
 @app.route("/display/")
 def display():
     return '<img src="'+url_for('static', filename='uploads/upload.png')+'"/>'
 
+#Uploading file through site
 @app.route("/upload/", methods=['POST','GET'])
 def upload():
     if request.method =='POST':
