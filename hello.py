@@ -39,26 +39,58 @@ def static_example_img():
 @app.route('/account',methods=['GET','POST'])
 def account():
     if request.method =='POST':
-        print request.form
-        name = request.form['name']
-        return "Hello %s" % name
+        f = request.files['datafile']
+        f.save('static/uploads/vmask.jpg')
+        return "File Uploaded"
     else:
         page = '''
-        <html><body>
-            <form action="" method="post" name="form">
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name"/>
-                <input type="submit" name="submit" id="submit"/>
-            </form>
-            </body><html>'''
-        return page
+        <html>
+        <body>
+        <form action="" method="post" name="form" enctype="multipart/form-data">
+            <input type="file" name="datafile" />
+            <input type="submit" name="submit" id="submit"/>
+        </form>
+        </body>
+        </html>
+        '''
+        return page, 200
+
+@app.route("/display/")
+def display():
+    return '<img src="'+url_for('static', filename='uploads/upload.png')+'"/>'
+
+@app.route("/upload/", methods=['POST','GET'])
+def upload():
+    if request.method =='POST':
+        f = request.files['datafile']
+        f.save('static/uploads/upload.png')
+        return "File Uploaded"
+    else:
+        page='''
+        <html>
+        <body>
+        <form action="" method="post" name="form" enctype="multipart/form-data">
+            <input type="file" name="datafile" />
+            <input type="submit" name="submit" id="submit"/>
+        </form>
+        </body>
+        </html>
+        '''
+        return page,200
 
 #URL VARIABLES
-@app.route('/hello/<name>')
-def hello(name):
-    return "Hello %s" % name
+#@app.route('/hello/<name>')
+#def hello(name):
+#    return "Hello %s" % name
 
 @app.route('/add/<int:first>/<int:second>')
 def add(first,second):
     return str(first+second)
 
+@app.route("/hello/")
+def hello():
+    name = request.args.get('name','')
+    if name == '':
+        return "no params supplied"
+    else:
+        return "Hello %s" %name
