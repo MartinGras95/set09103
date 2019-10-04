@@ -18,9 +18,27 @@ def hello(name=None):
 def condhello(name=None):
     return render_template('conditional.html', name=name)
 
+#Looping through users
+@app.route('/users/')
+def users():
+    names = ['Martin Gras','Sam Smith','Floyd Mayweather','Jerry Jenkins']
+    return render_template('loops.html',names=names)
 
+#Template Inheritance
+#base page
+@app.route('/father/')
+def father():
+    return render_template('base.html')
 
+#Page that inherits the base page
+@app.route('/father/son/')
+def son():
+    return render_template('base2.html')
 
+#Another page that inherits the base page
+@app.route('/father/grandson/')
+def grandson():
+    return render_template('base3.html')
 
 #404 handler
 @app.errorhandler(404)
