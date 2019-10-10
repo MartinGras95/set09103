@@ -10,18 +10,22 @@ def root():
 
 @app.route('/config/')
 def config():
-    str = []
-    str.append('Debug:True')
-    str.append('port:'+app.config['port'])
-    str.append('url:'+app.config['url'])
-    str.append('ip_address:'+app.config['ip_address'])
-    return '\t'.join(str)
+    str1 = []
+    str1.append('Debug:'+str(app.config['DEBUG']))
+    str1.append('port:'+app.config['port'])
+    str1.append('url:'+app.config['url'])
+    str1.append('ip_address:'+app.config['ip_address'])
+    return '\t'.join(str1)
 
 def init(app):
     config = ConfigParser.ConfigParser()
     try:
-        config_location = 'etc/defaults.cfg'
+        print "sads"
+        config_location = 'static/etc/defaults.cfg'
+        print "sads"
+        print config_location
         config.read(config_location)
+        print "sads"
 
         app.config['DEBUG'] = config.get("config","debug")
         app.config['ip_address'] = config.get("config","ip_address")

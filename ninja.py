@@ -40,6 +40,18 @@ def son():
 def grandson():
     return render_template('base3.html')
 
+
+#Simple randomizer website
+@app.route('/randomizer/')
+def randomizer():
+    return render_template('randomizer.html')
+
+#number randomizer extends randomizer
+@app.route('/numrandomizer/')
+def numrandomizer():
+    randomnum = 10
+    return render_template('numrandomizer.html',randomnum=randomnum)
+
 #404 handler
 @app.errorhandler(404)
 def page_not_found(error):

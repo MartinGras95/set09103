@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+	<title>Randomizer Website</title>
+	<link href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet"/>
+</head>
+
+<body>
+	<h1>Welcome to the randomizer website!!!</h1>
+	<a href="/numrandomizer">Number Randomizer</a>
+	
+	{% block content %} {% endblock %}
+</body>
+</html>
+
