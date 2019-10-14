@@ -1,5 +1,8 @@
-from flask import Flask, redirect, url_for, abort,request
+from flask import Flask, redirect, url_for, abort,request,session
 app = Flask(__name__)
+
+#session key
+app.secret_key = 'secretkey'
 
 @app.route('/')
 def hello_world():
@@ -77,3 +80,24 @@ def hello():
         return "no params supplied"
     else:
         return "Hello %s" %name
+
+#Sessions
+@app.route('/sessions/write/<name>/')
+def write(name=None):
+    session['name']=name
+    return "Wrote %s into 'name' key of sessions" % name
+
+@app.route('/sessions/read')
+def read():
+    try:
+        if(session['name']):
+            return str(session['name'])
+    except KeyError:
+        pass
+    return "No session variable set for 'name' key"
+
+#to remove key from session
+@app.route('/session/remove/')
+def remove():
+    session.pop('name',None)
+    return "Removed key 'name' from session"
